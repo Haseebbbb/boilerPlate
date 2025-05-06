@@ -27,5 +27,22 @@ describe('UserService', () => {
       expect(result).toEqual(mockUsers);
       expect(mockRepo.findAll).toHaveBeenCalled();
     });
+
+    it('should throw Error, when Error is thrown By repository', () => {
+      jest.clearAllMocks();
+      mockRepo = {
+        findAll: jest.fn().mockImplementation(() => {throw new Error('error')})
+      } as any;
+      (UserRepository as jest.Mock).mockImplementation(() => mockRepo);
+      userService = new UserService();
+
+      // const result = userService.getAllUsers();
+      
+      expect(()=>userService.getAllUsers()).toThrow('error');
+      expect(mockRepo.findAll).toHaveBeenCalled();
+
+    });
   });
+
+  
 });
