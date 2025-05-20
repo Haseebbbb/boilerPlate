@@ -1,10 +1,21 @@
-export class UserRepository {
-  private users = [
-    { id: 1, name: 'Alice' },
-    { id: 2, name: 'Bob' }
-  ];
+import { db } from '../config/database';
 
-  findAll() {
-    return this.users;
+export interface User {
+  id: number;
+  name: string;
+}
+
+export class UserRepository {
+  async findAll(): Promise<User[]> {
+    return await db('users').select('*');
+  }
+
+  async findById(id: number): Promise<User | undefined> {
+    return await db('users').where({ id }).first();
+  }
+
+  async create(user: Omit<User, 'id'>): Promise<User> {
+    const [created] = await db('users').insert(user).returning('*');
+    return created;
   }
 }
