@@ -6,10 +6,10 @@ const userService = new UserService();
 export const getUsers = async (_req: Request, res: Response) => {
   try {
     const users = await userService.getAllUsers();
-    return res.status(200).json(users);
+    res.status(200).json(users);
   } catch (error) {
     console.error('Error in getUsers:', error);
-    return res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
 
@@ -19,13 +19,14 @@ export const getUserById = async (req: Request, res: Response) => {
     const user = await userService.getUserById(id);
     
     if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+      res.status(404).json({ error: 'User not found' });
+      return;
     }
     
-    return res.status(200).json(user);
+    res.status(200).json(user);
   } catch (error) {
     console.error('Error in getUserById:', error);
-    return res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
 
@@ -34,13 +35,14 @@ export const createUser = async (req: Request, res: Response) => {
     const { name } = req.body;
     
     if (!name) {
-      return res.status(400).json({ error: 'Name is required' });
+      res.status(400).json({ error: 'Name is required' });
+      return;
     }
     
     const user = await userService.createUser({ name });
-    return res.status(201).json(user);
+    res.status(201).json(user);
   } catch (error) {
     console.error('Error in createUser:', error);
-    return res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
