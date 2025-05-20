@@ -45,4 +45,15 @@ export const createUser = async (req: Request, res: Response) => {
     console.error('Error in createUser:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
-};
+}
+
+  export const deleteUser = async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      const user = await userService.deleteUser(id)
+      res.status(200).json(user);
+    } catch (error) {
+      console.error('Error in Delete User:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  }

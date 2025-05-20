@@ -18,4 +18,7 @@ export class UserService {
   async createUser(user: Omit<User, 'id'>): Promise<User> {
     return await this.repo.create(user);
   }
+  async deleteUser(id: number): Promise<User[]> {
+    return await this.repo.delete(id)
+  }
 }

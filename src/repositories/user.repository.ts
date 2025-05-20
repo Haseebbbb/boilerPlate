@@ -18,4 +18,9 @@ export class UserRepository {
     const [created] = await db('users').insert(user).returning('*');
     return created;
   }
+
+  
+  async delete(id: number): Promise<User[]>{
+    return await db('users').delete().where({id}).returning('*');
+  }
 }
