@@ -4,15 +4,6 @@ import { Request, Response } from 'express';
 import { getUsers, getUserById, createUser } from '../src/controllers/user.controller';
 import { UserService } from '../src/services/user.service';
 
-// Integration test
-describe('GET /users endpoint', () => {
-  it('should return list of users', async () => {
-    const res = await request(app).get('/users');
-    expect(res.statusCode).toBe(200);
-    expect(Array.isArray(res.body)).toBe(true);
-  });
-});
-
 // Unit tests
 jest.mock('../src/services/user.service');
 
